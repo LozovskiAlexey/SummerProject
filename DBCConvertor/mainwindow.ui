@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>492</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DBCConverter</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox{
+	font: 13px;
+}
+
+QLineEdit {
+	 border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}
+
+QTextEdit {
+	border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}
+
+QPushButton{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: rgb(54, 54, 54);
+    font: bold 14px;
+    min-width: 10em;
+    padding: 6px;
+}
+
+QPushButton:pressed {
+    background-color: rgb(175, 175, 175);
+    border-style: inset;
+}
+
+QSpinBox{
+	border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+	font: 14px;
+}
+
+QLineEdit {
+	 border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}
+
+QTextEdit {
+	border-color: rgb(67, 67, 67);
+    border-style: solid;
+}
+
+QPushButton{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: rgb(54, 54, 54);
+    font: bold 12px;
+    min-width: 10em;
+    padding: 6px;
+}
+
+QPushButton:pressed {
+    background-color: rgb(175, 175, 175);
+    border-style: inset;
+}
+
+QSpinBox{
+	border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}</string>
+      </property>
+      <property name="title">
+       <string>Исходный DBC файл</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <property name="leftMargin">
+        <number>18</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>7</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>3</number>
+       </property>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="pushButton">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Выбрать файл</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QLineEdit" name="DBClineEdit">
+         <property name="text">
+          <string>C:\Users\mrado\OneDrive\Desktop\work\Parser\VCVCCU_J1939.dbc</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>DBC файл: </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="ProjectParamsGB">
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+	font: 14px;
+}
+
+QLineEdit {
+	 border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}
+
+QTextEdit {
+	border-color: rgb(67, 67, 67);
+    border-style: solid;
+}
+
+QPushButton{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: rgb(54, 54, 54);
+    font: bold 12px;
+    min-width: 10em;
+    padding: 6px;
+}
+
+QPushButton:pressed {
+    background-color: rgb(175, 175, 175);
+    border-style: inset;
+}
+
+QSpinBox{
+	border-color: rgb(67, 67, 67);
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 4px;
+}</string>
+      </property>
+      <property name="title">
+       <string>Параметры проекта</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="topMargin">
+        <number>11</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>4</number>
+       </property>
+       <item row="3" column="1">
+        <widget class="QFrame" name="SettingsFrame">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <item row="6" column="2">
+           <widget class="QPushButton" name="ChooseDirectoryPushButton">
+            <property name="text">
+             <string>Выбрать папку</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QLineEdit" name="ProjectNameLineEdit"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="UpLoadLabel">
+            <property name="text">
+             <string>Сохранить в папку:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="MSBoxLabel">
+            <property name="text">
+             <string>Нумерация MessageBox:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
+           <widget class="QLineEdit" name="UpLoadLineEdit"/>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QSpinBox" name="MSBoxSpinBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="ProjectNameLabel">
+            <property name="text">
+             <string>Название проекта:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Генерируемые файлы</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="ChooseAll">
+         <property name="text">
+          <string>Выбрать все</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="MainRBC">
+         <property name="text">
+          <string>.c</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="MainRBH">
+         <property name="text">
+          <string>.h</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="TransmitRBC">
+         <property name="text">
+          <string>Transmit.c</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="TransmitRBH">
+         <property name="text">
+          <string>Transmit.h</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="RecieveRBC">
+         <property name="text">
+          <string>Recieve.c</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="RecieveRBH">
+         <property name="text">
+          <string>Recieve.h</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="DefinesRBH">
+         <property name="text">
+          <string>Defines.h</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ExecPushButton">
+      <property name="text">
+       <string>Преобразовать</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>492</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action_DBC"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Инфо</string>
+    </property>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_DBC">
+   <property name="text">
+    <string>Добавить DBC-файл</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
