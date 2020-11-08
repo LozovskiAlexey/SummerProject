@@ -15,6 +15,9 @@
 
 class Mediator : public BaseMediator
 {
+    Q_OBJECT
+
+    int counter;
     DBCParser *parser;
     TransmitHTransformer *transmitHTransformer;
     TransmitCTransformer *transmitCTransformer;
@@ -29,7 +32,7 @@ public:
 
     void set(DBCdata *data) override;
     void set(DBCParsedData *data) override;
-    void Notify(int command) const override;
+    void Notify(int command) override;
     void exec(BaseComponent *executer) const;
 };
 

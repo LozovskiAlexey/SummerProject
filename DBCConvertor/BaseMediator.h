@@ -3,11 +3,17 @@
 
 #include "dbcdata.h"
 #include "ParsedDataStructure.h"
+#include <QObject>
 
-class BaseMediator
+class BaseMediator : public QObject
 {
+    Q_OBJECT
+
+signals:
+    void work_finished();
+
 public:
-    virtual void Notify(int command) const = 0;
+    virtual void Notify(int command) = 0;
     virtual void set(DBCdata *) {}
     virtual void set(DBCParsedData *){}
 };

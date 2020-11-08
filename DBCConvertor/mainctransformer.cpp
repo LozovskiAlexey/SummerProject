@@ -103,5 +103,7 @@ void MaincTransformer::exec()
         }
         else
             qDebug() << "Check Transform failed";
+
+        mediator_->Notify(2);
     }
 }

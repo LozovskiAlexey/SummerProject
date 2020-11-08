@@ -20,6 +20,9 @@ signals:
     void workFinishedSignal();
     void failedToFinishWorkSignal();
 
+public slots:
+    void on_mediator_work_slot();
+
 private:
     Mediator *DBC_mediator;
 };

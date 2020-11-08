@@ -14,7 +14,8 @@ Mediator::Mediator()
     definesHTransformer = new DefinesHTransformer(this);
 
     maincTransformer = new MaincTransformer(this);
-    // добавить класс-генератор
+
+    counter = 0;
 }
 
 
@@ -27,20 +28,34 @@ void Mediator::exec(BaseComponent *executer) const
 void Mediator::set(DBCdata *data)
 {
     parser->setData(data);
-    if (data->get_project_structure().main_c)
+    if (data->get_project_structure().main_c){
         maincTransformer->setData(data);
-    if (data->get_project_structure().main_h)
+        counter += 1;
+    }
+    if (data->get_project_structure().main_h){
         mainHTransformer->setData(data);
-    if (data->get_project_structure().defines_h)
+        counter += 1;
+    }
+    if (data->get_project_structure().defines_h){
         definesHTransformer->setData(data);
-    if (data->get_project_structure().recieve_c)
+        counter += 1;
+    }
+    if (data->get_project_structure().recieve_c){
         recieveCTransformer->setData(data);
-    if (data->get_project_structure().recieve_h)
+        counter += 1;
+    }
+    if (data->get_project_structure().recieve_h){
         recieveHTransformer->setData(data);
-    if (data->get_project_structure().transmit_c)
+        counter += 1;
+    }
+    if (data->get_project_structure().transmit_c){
         transmitCTransformer->setData(data);
-    if (data->get_project_structure().transmit_h)
+        counter += 1;
+    }
+    if (data->get_project_structure().transmit_h){
         transmitHTransformer->setData(data);
+        counter += 1;
+    }
 }
 
 void Mediator::set(DBCParsedData *data)
@@ -54,7 +69,7 @@ void Mediator::set(DBCParsedData *data)
     maincTransformer->setData(data);
 }
 
-void Mediator::Notify(int command) const
+void Mediator::Notify(int command)
 {
     switch (command){
     case 0:
@@ -70,7 +85,12 @@ void Mediator::Notify(int command) const
         exec(maincTransformer);
         break;
     case 2:
-        // завершение работы, отправка сигнала в facade о конце работы
+        counter--;
+        if (counter == 0)
+            Notify(3);
+        break;
+    case 3:
+        emit work_finished();
         break;
     }
 }
