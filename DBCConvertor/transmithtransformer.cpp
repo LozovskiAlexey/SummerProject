@@ -57,6 +57,8 @@ void TransmitHTransformer::exec()
             text = "\n" + prj_name +"MsgBoxes create_" + prj_name + "_tx_message_boxes(canBASE_t *node, " + prj_name + "MsgBoxes *msgBoxes);\n\n\n" +
                    "#ifdef __cplusplus\n}\n#endif\n\n#endif\n";
             file.write(text.toUtf8());
+
+            file.close();
         }
         else
             qDebug() << "Check Transform failed";

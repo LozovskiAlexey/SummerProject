@@ -17,7 +17,9 @@ public:
 
     void readBU_(QStringList *lst, DBCParsedData *data);
     void readBO_(QStringList *lst, DBCParsedData *data);
+    void readBA_(QStringList *lst, DBCParsedData *data);
     void readSG_(QStringList *lst, DBCParsedData *data);
+    void readVAL_(QStringList *lst, DBCParsedData *data);
     void showData(DBCParsedData *data);
     void setData(DBCdata *data) override;
     void exec() override;

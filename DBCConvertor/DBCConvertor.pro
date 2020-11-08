@@ -18,12 +18,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dbcdata.cpp \
     dbcparser.cpp \
+    defineshtransformer.cpp \
     facade.cpp \
     main.cpp \
+    mainctransformer.cpp \
     mainhtransformer.cpp \
     mainwindow.cpp \
     mediator.cpp \
+    recievectransformer.cpp \
     recievehtransformer.cpp \
+    transmitctransformer.cpp \
     transmithtransformer.cpp
 
 HEADERS += \
@@ -33,12 +37,16 @@ HEADERS += \
     ParsedDataStructure.h \
     dbcdata.h \
     dbcparser.h \
+    defineshtransformer.h \
     facade.h \
+    mainctransformer.h \
     mainhtransformer.h \
     mainwindow.h \
     mediator.h \
     projectdatastructure.h \
+    recievectransformer.h \
     recievehtransformer.h \
+    transmitctransformer.h \
     transmithtransformer.h
 
 FORMS += \

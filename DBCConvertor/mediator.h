@@ -3,9 +3,13 @@
 
 #include "BaseMediator.h"
 #include "dbcparser.h"
+#include "transmitctransformer.h"
 #include "transmithtransformer.h"
 #include "recievehtransformer.h"
+#include "recievectransformer.h"
 #include "mainhtransformer.h"
+#include "defineshtransformer.h"
+#include "mainctransformer.h"
 #include "dbcdata.h"
 
 
@@ -13,8 +17,12 @@ class Mediator : public BaseMediator
 {
     DBCParser *parser;
     TransmitHTransformer *transmitHTransformer;
+    TransmitCTransformer *transmitCTransformer;
     RecieveHTransformer *recieveHTransformer;
     MainHTransformer *mainHTransformer;
+    MaincTransformer *maincTransformer;
+    DefinesHTransformer *definesHTransformer;
+    RecieveCTransformer *recieveCTransformer;
 
 public:
     Mediator();
