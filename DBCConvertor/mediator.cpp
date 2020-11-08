@@ -27,13 +27,20 @@ void Mediator::exec(BaseComponent *executer) const
 void Mediator::set(DBCdata *data)
 {
     parser->setData(data);
-    transmitHTransformer->setData(data);
-    transmitCTransformer->setData(data);
-    recieveHTransformer->setData(data);
-    recieveCTransformer->setData(data);
-    mainHTransformer->setData(data);
-    definesHTransformer->setData(data);
-    maincTransformer->setData(data);
+    if (data->get_project_structure().main_c)
+        maincTransformer->setData(data);
+    if (data->get_project_structure().main_h)
+        mainHTransformer->setData(data);
+    if (data->get_project_structure().defines_h)
+        definesHTransformer->setData(data);
+    if (data->get_project_structure().recieve_c)
+        recieveCTransformer->setData(data);
+    if (data->get_project_structure().recieve_h)
+        recieveHTransformer->setData(data);
+    if (data->get_project_structure().transmit_c)
+        transmitCTransformer->setData(data);
+    if (data->get_project_structure().transmit_h)
+        transmitHTransformer->setData(data);
 }
 
 void Mediator::set(DBCParsedData *data)
@@ -61,7 +68,6 @@ void Mediator::Notify(int command) const
         exec(mainHTransformer);
         exec(definesHTransformer);
         exec(maincTransformer);
-        // создать фабрики и параллельно запустить exec()
         break;
     case 2:
         // завершение работы, отправка сигнала в facade о конце работы

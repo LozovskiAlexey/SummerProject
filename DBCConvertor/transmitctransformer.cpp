@@ -7,6 +7,8 @@ TransmitCTransformer::TransmitCTransformer()
 
 TransmitCTransformer::TransmitCTransformer(BaseMediator *mediator)
 {
+    project_data_ = nullptr;
+    data_ = nullptr;
     set_mediator(mediator);
 }
 

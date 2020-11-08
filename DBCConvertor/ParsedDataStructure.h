@@ -58,11 +58,13 @@ typedef struct {
             type_values.name = "int" + QString::number(digit) + + "_t";
             start_value = "0";
         }
-        // добавить обработку для float
     }
 
     void set_type(QString name){
         type_values.name = name;
+
+        if (name == "float")
+            start_value = "0.0f";
     }
 
     void set_type(enum_t type_vals){
@@ -85,10 +87,12 @@ typedef struct {
 
     sgnl_t* get_sgnl_by_name(QString name){
         sgnl_t *sgnl = nullptr;
-        int size = name.size();
 
         for (int i=0; i < msgSignals->size(); i++){
-            if (msgSignals->at(i)->name.left(size) == name)
+            auto sg_name = msgSignals->at(i)->name;
+            if (msgSignals->at(i)->name.size() >=32)
+                sg_name = msgSignals->at(i)->name.left(32);
+            if (sg_name == name)
                 sgnl = msgSignals->at(i);
         }
         return sgnl;

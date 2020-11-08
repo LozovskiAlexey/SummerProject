@@ -7,6 +7,8 @@ RecieveCTransformer::RecieveCTransformer()
 
 RecieveCTransformer::RecieveCTransformer(BaseMediator *mediator)
 {
+    project_data_ = nullptr;
+    data_ = nullptr;
     set_mediator(mediator);
 }
 

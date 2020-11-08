@@ -39,11 +39,6 @@ void DBCParser::readBO_(QStringList *lst, DBCParsedData *data)
 
 void DBCParser::readBA_(QStringList *lst, DBCParsedData *data)
 {
-    // оно как бы нужно, но как бы я вообще не понимаю,
-    // зачем оно нужно, все стартовые значения не совпадают
-    // ни с кодом ни с enum структурами КОТОРЫЕ ПРИВЕДЕНЫ НИЖЕ
-    // В ТОМ ЖЕ САМОМ ФАЙЛЕ, мой светый ум в такое не умеет
-
     // пока что оно просто читает по BA_-метке cycle_time для каждого
     // msgbox
     lst->replaceInStrings("\"", "");
@@ -66,7 +61,8 @@ void DBCParser::readSG_(QStringList *lst, DBCParsedData *data)
     sgnl->name = lst->at(2);
     sgnl->size = size.toInt();
     sgnl->startbit = sgnl_params.at(0).toInt();
-    sgnl->issigned = sgnl_params.at(1).split('@').at(1) == "1+" ? false : true;
+//    sgnl->issigned = sgnl_params.at(1).split('@').at(1) == "1+" ? false : true;
+    sgnl->issigned = lst->at(5).contains('-') ? true : false;
 
     QStringList minMaxVal = lst->at(6).split('|');
     QString minVal = minMaxVal.at(0);
@@ -76,7 +72,11 @@ void DBCParser::readSG_(QStringList *lst, DBCParsedData *data)
 
     QString sender = lst->last();
     sgnl->sender = sender.left(sender.size()-2);
-    sgnl->set_type();
+
+    if (lst->at(5).contains('.'))
+        sgnl->set_type("float");
+    else
+        sgnl->set_type();
 
     data->msgboxes->last()->msgSignals->append(sgnl);
 }
@@ -86,6 +86,7 @@ void DBCParser::readVAL_(QStringList *lst, DBCParsedData *data)
 {
     QString msBox_id = lst->at(1);
     QString sgnl_name = lst->at(2);
+//    qDebug() << sgnl_name ;
 
     enum_t *tmp_enum = new enum_t;
     QMap<int, QString> type_values;
@@ -93,35 +94,41 @@ void DBCParser::readVAL_(QStringList *lst, DBCParsedData *data)
     auto msg_box = data->get_by_id(msBox_id);
     auto sgnl = msg_box->get_sgnl_by_name(sgnl_name);
 
-    if (lst->size() == 8 && lst->at(4).toUpper() =="\"TRUE\""){
+    // трансформировать строку
+    auto line = lst->join(' ');
+    line.replace("'", "_");
+    line.replace('.', '_');
+    line.replace(',', '_');
+    line.replace(';', "");
+
+    bool ismember = false;
+    for (int i=0; i<line.size(); i++){
+        if (line[i] == '"'){
+            ismember = !ismember;
+        }
+        if (line[i] == " " and ismember == true){
+            line.replace(i, 1, "_");
+        }
+    }
+
+    auto tmp_lst = line.split(" ");
+    tmp_lst.replaceInStrings("\"", "");
+
+    if (not (tmp_lst.contains("0") and tmp_lst.contains("1")) and
+            (tmp_lst.contains(QString::number(pow(2, 16)-1)) or
+             tmp_lst.contains(QString::number(pow(2, 8)-1)) or
+             tmp_lst.contains("SNA") or
+             tmp_lst.contains("error"))){
+        sgnl->set_type();
+    }
+    else if (tmp_lst.size() == 8){
         sgnl->set_type("bool");
     }
-    else
-    {
-        // трансформировать строку
-        auto line = lst->join(' ');
-        line.replace("'", "_");
-        line.replace('.', '_');
-        line.replace(',', '_');
-
-        bool ismember = false;
-        for (int i=0; i<line.size(); i++){
-            if (line[i] == '"'){
-                ismember = !ismember;
-            }
-            if (line[i] == " " and ismember == true){
-                line.replace(i, 1, "_");
-            }
-        }
-
-        auto tmp_lst = line.split(" ");
-        tmp_lst.replaceInStrings("\"", "");
-
+    else{
         // заполняем enum
         for (int i=3; i<tmp_lst.size()-1; i+=2){
             type_values[tmp_lst.at(i).toInt()] = tmp_lst.at(i+1);
         }
-
 
         tmp_enum->set_name(sgnl_name);
         tmp_enum->values = type_values;
@@ -131,7 +138,13 @@ void DBCParser::readVAL_(QStringList *lst, DBCParsedData *data)
 
         // обновляем значение
         sgnl->set_type(*tmp_enum);
+
+//        qDebug() << "_________________CHECK__________________";
+//        qDebug() << sgnl->name;
+//        qDebug() << sgnl->type_values.name;
+//        qDebug() << "________________________________________";
     }
+
 }
 
 void DBCParser::showData(DBCParsedData *data)
@@ -145,17 +158,17 @@ void DBCParser::showData(DBCParsedData *data)
         qDebug() << "SENDER " << data->msgboxes->at(i)->sender;
         qDebug() << "CICLE_TIME " << data->msgboxes->at(i)->cycle_time;
 
-//        qDebug() << "SG NUMBER " << data->msgboxes->at(i)->msgSignals->size();
-//        for (int j=0; j<data->msgboxes->at(i)->msgSignals->size(); j++)
-//        {
-//            qDebug() << "\t  =================== SIGNALS ================== ";
-//            qDebug() << "\t NAME " << data->msgboxes->at(i)->msgSignals->at(j)->name;
-//            qDebug() << "\t SIZE " << data->msgboxes->at(i)->msgSignals->at(j)->size;
-//            qDebug() << "\t SENDER " << data->msgboxes->at(i)->msgSignals->at(j)->sender;
-//            qDebug() << "\t FLAG " << data->msgboxes->at(i)->msgSignals->at(j)->issigned;
-//            qDebug() << "\t STARTBIT " << data->msgboxes->at(i)->msgSignals->at(j)->startbit;
-//            qDebug() << "\t TYPE " << data->msgboxes->at(i)->msgSignals->at(j)->type_values.name;
-//        }
+        qDebug() << "SG NUMBER " << data->msgboxes->at(i)->msgSignals->size();
+        for (int j=0; j<data->msgboxes->at(i)->msgSignals->size(); j++)
+        {
+            qDebug() << "\t  =================== SIGNALS ================== ";
+            qDebug() << "\t NAME " << data->msgboxes->at(i)->msgSignals->at(j)->name;
+            qDebug() << "\t SIZE " << data->msgboxes->at(i)->msgSignals->at(j)->size;
+            qDebug() << "\t SENDER " << data->msgboxes->at(i)->msgSignals->at(j)->sender;
+            qDebug() << "\t FLAG " << data->msgboxes->at(i)->msgSignals->at(j)->issigned;
+            qDebug() << "\t STARTBIT " << data->msgboxes->at(i)->msgSignals->at(j)->startbit;
+            qDebug() << "\t TYPE " << data->msgboxes->at(i)->msgSignals->at(j)->type_values.name;
+        }
     }
 }
 
@@ -207,7 +220,7 @@ void DBCParser::exec()
 
             file.close();
 
-            showData(&data);
+//            showData(&data);
             mediator_->set(&data);
             mediator_->Notify(1);
         }
